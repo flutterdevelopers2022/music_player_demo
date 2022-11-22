@@ -33,6 +33,7 @@ class _Songs_classState extends State<Songs_class> {
                 subtitle: Text("${list[index].artist!}"),
                 trailing:Wrap(children: [
                   Icon(Icons.more_vert_outlined),
+
                   Icon(Icons.more_vert_outlined)
                 ],),
               );
