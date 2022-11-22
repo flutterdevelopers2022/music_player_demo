@@ -21,7 +21,7 @@ class _Songs_classState extends State<Songs_class> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           List<SongModel> list = snapshot.data as List<SongModel>;
-          print(list);
+
           return ListView.builder(
             itemCount: list.length,
             itemBuilder: (context, index) {

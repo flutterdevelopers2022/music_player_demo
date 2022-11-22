@@ -85,8 +85,9 @@ class _FirstState extends State<First> with TickerProviderStateMixin {
           leading: Icon(
         Icons.music_video
       ),
-      title: MyConfig.song_list.length>0? Obx(() => Text("${m.cur_ind.value}")) :Text(""),
-        subtitle: Text("${m.cur_ind.value}"),
+      title: MyConfig.song_list.length>0? Obx(() => Text("${m.cur_ind.value}")) :Text("HI:${MyConfig.song_list.length}"),
+        subtitle: Obx(() => Text("${m.cur_ind.value}")),
+
         trailing: Wrap(children: [
           Icon(Icons.play_arrow),
           Icon(Icons.playlist_add_check_rounded)
