@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -82,17 +83,35 @@ class _FirstState extends State<First> with TickerProviderStateMixin {
         ],
       ),
       bottomNavigationBar: ListTile(
-          leading: Icon(
-        Icons.music_video
-      ),
-      title: MyConfig.song_list.length>0? Obx(() => Text("${m.cur_ind.value}")) :Text("HI:${MyConfig.song_list.length}"),
-        subtitle: Obx(() => Text("${m.cur_ind.value}")),
+          leading: Obx(() => FutureBuilder(future: m.get_image(m.cur_ind.value),builder: (context, snapshot) {
+            if(snapshot.hasData){
+              return snapshot.data!;
+            }else
+            {
+              return Icon(Icons.music_note_outlined);
+            }
+          },)),
 
+      title: Obx(() => m.song_list.value.isNotEmpty ? Obx(() => Text("${m.song_list[m.cur_ind.value].title}")) :Text("")),
+        subtitle: Obx(() => m.song_list.value.isNotEmpty ? Obx(() => Text("${m.song_list.value[m.cur_ind.value].artist}")) : Text("")),
         trailing: Wrap(children: [
-          Icon(Icons.play_arrow),
+          Obx(() =>    m.isPlay.value ? IconButton(onPressed: () async {
+            await MyConfig.player.pause();
+            m.isPlay.value=!m.isPlay.value;
+          }, icon: Icon(Icons.pause)) : IconButton(onPressed: () async {
+            await MyConfig.player.play(DeviceFileSource(m.song_list.value[m.cur_ind.value].data));
+            m.isPlay.value=!m.isPlay.value;
+          }, icon: Icon(Icons.play_arrow))),
           Icon(Icons.playlist_add_check_rounded)
         ],),
+
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    MyConfig.player.stop();
   }
 }

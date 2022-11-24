@@ -38,6 +38,8 @@ dependencies:
   permission_handler:
   on_audio_query:
   get:
+  audioplayers:
+  flutter_media_metadata:
 
 dev_dependencies:
   flutter_test:
